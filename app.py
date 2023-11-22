@@ -1,7 +1,7 @@
 import sqlite3
 import statistics
 
-THRESHOLD = 5
+THRESHOLD = 4
 
 crsr = sqlite3.connect('Marks.sqlite')
 
@@ -152,18 +152,19 @@ def StudentPerfomance(studentName):
         print(f"{studentName} is an competant student")
         return True
 
+def AnalyzeClass():
+    c.execute("SELECT name FROM TheoryMarks")
+    nameList =  c.fetchall()
+    remedialList = []
+    for name in nameList:
+        if name[0] == 'Average':
+            continue
+        if not (StudentPerfomance(name[0])):
+            remedialList.append(name[0])
 
-#Main Function
-'''
-c.execute("SELECT name FROM TheoryMarks")
-nameList =  c.fetchall()
-remedialList = []
-for name in nameList:
-    if not (StudentPerfomance(name[0])):
-        remedialList.append(name[0])
+    print("\nThe following students need remedial classes:\n")
+    for index in range(len(remedialList)):
+        print(remedialList[index]+"\n")
+    updateAverages('LabMarks')
 
-print("The following students need remedial classes:\n")
-for index in range(len(remedialList)):
-    print(remedialList[index])
-'''
-updateAverages('LabMarks')
+AnalyzeClass()
