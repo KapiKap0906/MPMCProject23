@@ -1,7 +1,7 @@
 import sqlite3
 import statistics
 
-THRESHOLD = 4
+THRESHOLD = 10
 
 crsr = sqlite3.connect('Marks.sqlite')
 
